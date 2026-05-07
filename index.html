@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday, Farah! 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #f0c060;
+    --gold-light: #ffe9a0;
+    --amber: #e8a020;
+    --deep-blue: #0a0e2a;
+    --mid-blue: #101840;
+    --accent-cyan: #60d8ff;
+    --accent-purple: #a070ff;
+    --glow-gold: rgba(240,192,96,0.6);
+    --glow-cyan: rgba(96,216,255,0.4);
+    --text-light: #f5ecd0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    width: 100%; min-height: 100vh;
+    background: var(--deep-blue);
+    color: var(--text-light);
+    font-family: 'Cormorant Garamond', serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── STARFIELD ── */
+  #starfield {
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none; overflow: hidden;
+  }
+  .star {
+    position: absolute; border-radius: 50%;
+    background: white;
+    animation: twinkle var(--d, 3s) ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: var(--min, 0.2); transform: scale(1); }
+    50%      { opacity: 1; transform: scale(1.4); }
+  }
+
+  /* ── FLOATING PARTICLES ── */
+  #particles { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+  .particle {
+    position: absolute; bottom: -20px;
+    border-radius: 50%;
+    animation: floatUp var(--dur, 8s) linear infinite;
+    opacity: 0;
+  }
+  @keyframes floatUp {
+    0%   { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.8; }
+    90%  { opacity: 0.4; }
+    100% { transform: translateY(-110vh) translateX(var(--dx,20px)) rotate(720deg); opacity: 0; }
+  }
+
+  /* ── SHOOTING STARS ── */
+  .shooting-star {
+    position: fixed; z-index: 1;
+    width: 3px; height: 3px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .shooting-star::after {
+    content: '';
+    position: absolute; right: 3px; top: 50%;
+    width: 120px; height: 1px;
+    transform: translateY(-50%);
+    background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+  }
+  .shooting-star { animation: shoot var(--sd,4s) linear var(--delay,0s) infinite; }
+  @keyframes shoot {
+    0%   { transform: translate(110vw, -10px) rotate(-25deg); opacity: 1; }
+    100% { transform: translate(-20vw, 60vh) rotate(-25deg); opacity: 0; }
+  }
+
+  /* ── SAKURA PETALS ── */
+  .petal {
+    position: fixed; z-index: 1;
+    width: 12px; height: 10px;
+    background: radial-gradient(ellipse, #ffaabb, #ff7799);
+    border-radius: 50% 0 50% 0;
+    pointer-events: none;
+    animation: petalFall var(--pd, 9s) linear var(--pdelay, 0s) infinite;
+    opacity: 0;
+  }
+  @keyframes petalFall {
+    0%   { transform: translate(0,0) rotate(0deg); opacity: 0; }
+    5%   { opacity: 0.9; }
+    80%  { opacity: 0.6; }
+    100% { transform: translate(var(--pdx, 40px), 110vh) rotate(600deg); opacity: 0; }
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .page-wrapper {
+    position: relative; z-index: 10;
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 60px 20px 80px;
+    gap: 50px;
+  }
+
+  /* ── VISION ORBS (Genshin elements) ── */
+  .element-orbs {
+    display: flex; gap: 24px; justify-content: center;
+    margin-bottom: -20px;
+  }
+  .orb {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    animation: orbPulse var(--od, 2s) ease-in-out infinite alternate;
+    box-shadow: 0 0 16px var(--oc, #fff);
+  }
+  @keyframes orbPulse {
+    from { transform: translateY(0) scale(1); }
+    to   { transform: translateY(-8px) scale(1.1); }
+  }
+
+  /* ── HEADER CARD ── */
+  .main-card {
+    max-width: 720px; width: 100%;
+    background: linear-gradient(135deg, rgba(16,24,64,0.9) 0%, rgba(10,14,42,0.95) 100%);
+    border: 1px solid rgba(240,192,96,0.35);
+    border-radius: 4px;
+    padding: 56px 48px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      0 0 60px rgba(240,192,96,0.08),
+      0 0 120px rgba(96,216,255,0.05),
+      inset 0 1px 0 rgba(240,192,96,0.2);
+  }
+  .main-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(160,112,255,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(96,216,255,0.06) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  /* Corner ornaments */
+  .main-card::after {
+    content: '✦';
+    position: absolute; top: 14px; right: 18px;
+    color: var(--gold); opacity: 0.4; font-size: 20px;
+    animation: spinSlow 8s linear infinite;
+  }
+  @keyframes spinSlow { to { transform: rotate(360deg); } }
+  .corner-tl, .corner-br {
+    position: absolute; font-size: 20px; color: var(--gold); opacity: 0.4;
+  }
+  .corner-tl { top: 14px; left: 18px; animation: spinSlow 8s linear infinite reverse; }
+  .corner-br { bottom: 14px; right: 18px; animation: spinSlow 6s linear infinite; }
+
+  .subtitle-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 4px;
+    color: var(--accent-cyan); text-transform: uppercase;
+    margin-bottom: 18px;
+    animation: fadeSlideDown 1s ease both;
+  }
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .main-title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 900;
+    line-height: 1.15;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 40%, var(--amber) 70%, var(--gold-light) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    text-shadow: none;
+    filter: drop-shadow(0 0 24px var(--glow-gold));
+    animation: fadeSlideUp 1s 0.3s ease both;
+    margin-bottom: 6px;
+  }
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .name-title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: clamp(36px, 8vw, 68px);
+    font-weight: 900;
+    background: linear-gradient(90deg, var(--accent-cyan) 0%, white 50%, var(--accent-purple) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    filter: drop-shadow(0 0 30px rgba(96,216,255,0.5));
+    animation: fadeSlideUp 1s 0.6s ease both, nameGlow 3s 1.6s ease-in-out infinite alternate;
+  }
+  @keyframes nameGlow {
+    from { filter: drop-shadow(0 0 20px rgba(96,216,255,0.4)); }
+    to   { filter: drop-shadow(0 0 40px rgba(160,112,255,0.7)); }
+  }
+
+  .divider {
+    display: flex; align-items: center; gap: 14px;
+    margin: 24px auto; max-width: 340px;
+    animation: fadeSlideUp 1s 0.8s ease both;
+  }
+  .divider-line { flex: 1; height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent); }
+  .divider-gem {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    animation: gemSpin 4s linear infinite;
+    box-shadow: 0 0 10px var(--glow-gold);
+  }
+  @keyframes gemSpin { to { transform: rotate(360deg); } }
+
+  .birthday-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; letter-spacing: 3px;
+    color: rgba(240,192,96,0.7);
+    margin-bottom: 28px;
+    animation: fadeSlideUp 1s 1s ease both;
+  }
+
+  .message {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; line-height: 1.85;
+    color: rgba(245,236,208,0.88);
+    font-style: italic;
+    max-width: 540px; margin: 0 auto 32px;
+    animation: fadeSlideUp 1s 1.2s ease both;
+  }
+
+  .from-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 2px;
+    color: var(--accent-cyan);
+    animation: fadeSlideUp 1s 1.4s ease both;
+  }
+
+  /* ── AGE COUNTER ── */
+  .age-section {
+    max-width: 720px; width: 100%;
+    display: flex; gap: 20px; justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeSlideUp 1s 1.6s ease both;
+  }
+  .age-card {
+    background: rgba(16,24,64,0.85);
+    border: 1px solid rgba(240,192,96,0.25);
+    border-radius: 4px; padding: 24px 32px;
+    text-align: center; flex: 1; min-width: 130px; max-width: 180px;
+    position: relative; overflow: hidden;
+  }
+  .age-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center bottom, rgba(240,192,96,0.06), transparent 70%);
+  }
+  .age-number {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 42px; font-weight: 900;
+    background: linear-gradient(135deg, var(--gold-light), var(--amber));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    filter: drop-shadow(0 0 12px var(--glow-gold));
+    line-height: 1;
+  }
+  .age-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 2px;
+    color: rgba(240,192,96,0.6); text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  /* ── GENSHIN PANEL ── */
+  .info-grid {
+    max-width: 720px; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    animation: fadeSlideUp 1s 1.8s ease both;
+  }
+  @media (max-width: 500px) { .info-grid { grid-template-columns: 1fr; } }
+  .info-panel {
+    background: rgba(16,24,64,0.85);
+    border: 1px solid rgba(240,192,96,0.2);
+    border-radius: 4px; padding: 28px 24px;
+    position: relative; overflow: hidden;
+  }
+  .info-panel::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at top left, var(--panel-glow, rgba(240,192,96,0.05)), transparent 60%);
+  }
+  .info-panel-icon { font-size: 32px; margin-bottom: 12px; display: block; }
+  .info-panel-title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 13px; color: var(--gold);
+    letter-spacing: 1px; margin-bottom: 10px;
+  }
+  .info-panel-text {
+    font-size: 15px; line-height: 1.7;
+    color: rgba(245,236,208,0.75);
+  }
+  .tag {
+    display: inline-block;
+    background: rgba(240,192,96,0.12);
+    border: 1px solid rgba(240,192,96,0.3);
+    border-radius: 2px;
+    padding: 3px 10px; font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--gold-light); margin: 3px 2px;
+  }
+
+  /* ── CODE CARD ── */
+  .code-card {
+    max-width: 720px; width: 100%;
+    background: rgba(10,14,42,0.95);
+    border: 1px solid rgba(96,216,255,0.25);
+    border-radius: 4px; padding: 28px 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; line-height: 1.9;
+    color: rgba(200,220,255,0.7);
+    animation: fadeSlideUp 1s 2s ease both;
+    position: relative; overflow: hidden;
+  }
+  .code-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(96,216,255,0.04), transparent 50%);
+  }
+  .code-tab {
+    position: absolute; top: 0; left: 0;
+    background: rgba(96,216,255,0.15); border-bottom: 1px solid rgba(96,216,255,0.25);
+    padding: 6px 20px; font-size: 11px; color: var(--accent-cyan); letter-spacing: 1px;
+    border-radius: 4px 0 0 0;
+  }
+  .code-card pre { padding-top: 24px; }
+  .kw { color: #a070ff; }
+  .fn { color: #60d8ff; }
+  .str { color: #f0c060; }
+  .num { color: #ff9090; }
+  .cm { color: rgba(200,220,255,0.35); font-style: italic; }
+
+  /* ── MUSIC PLAYER ── */
+  .music-player {
+    max-width: 720px; width: 100%;
+    background: linear-gradient(135deg, rgba(16,24,64,0.95), rgba(10,14,42,0.98));
+    border: 1px solid rgba(240,192,96,0.3);
+    border-radius: 4px; padding: 32px 36px;
+    display: flex; align-items: center; gap: 28px;
+    animation: fadeSlideUp 1s 2.2s ease both;
+    position: relative; overflow: hidden;
+  }
+  .music-player::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 0% 50%, rgba(160,112,255,0.07), transparent 50%);
+  }
+  .album-art {
+    width: 80px; height: 80px; flex-shrink: 0;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #1a0a3a, #0a1a4a);
+    border: 1px solid rgba(240,192,96,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 36px;
+    position: relative; overflow: hidden;
+    animation: albumSpin 8s linear infinite paused;
+  }
+  @keyframes albumSpin { to { transform: rotate(360deg); } }
+  .music-info { flex: 1; }
+  .music-title {
+    font-family: 'Cinzel Decorative', cursive;
+    font-size: 14px; color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .music-artist { font-size: 13px; color: rgba(245,236,208,0.5); margin-bottom: 12px; font-style: italic; }
+  .music-suggest {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; color: var(--accent-cyan);
+    letter-spacing: 1px; margin-bottom: 12px;
+  }
+  .progress-bar {
+    width: 100%; height: 3px;
+    background: rgba(240,192,96,0.15); border-radius: 2px;
+    margin-bottom: 12px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(to right, var(--accent-cyan), var(--gold));
+    border-radius: 2px;
+    transition: width 0.5s linear;
+  }
+  .controls { display: flex; gap: 16px; align-items: center; }
+  .ctrl-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--gold); font-size: 20px;
+    transition: all 0.2s;
+    filter: drop-shadow(0 0 6px var(--glow-gold));
+    padding: 4px;
+  }
+  .ctrl-btn:hover { transform: scale(1.2); filter: drop-shadow(0 0 12px var(--glow-gold)); }
+  .play-btn {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold), var(--amber));
+    border: none; cursor: pointer; font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 20px var(--glow-gold);
+    transition: all 0.2s;
+  }
+  .play-btn:hover { transform: scale(1.1); box-shadow: 0 0 30px var(--glow-gold); }
+
+  /* ── WISH SPARKLES (on click) ── */
+  .sparkle-burst {
+    position: fixed; pointer-events: none; z-index: 999;
+    font-size: 22px;
+    animation: sparkleOut 0.8s ease forwards;
+  }
+  @keyframes sparkleOut {
+    0%   { transform: translate(-50%,-50%) scale(0); opacity: 1; }
+    100% { transform: translate(-50%,-50%) scale(2.5) rotate(45deg); opacity: 0; }
+  }
+
+  /* ── FOOTER ── */
+  .footer-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; color: rgba(240,192,96,0.35);
+    letter-spacing: 2px; text-align: center;
+    animation: fadeSlideUp 1s 2.4s ease both;
+  }
+</style>
+</head>
+<body>
+
+<!-- Starfield -->
+<div id="starfield"></div>
+<!-- Floating particles -->
+<div id="particles"></div>
+
+<div class="page-wrapper">
+
+  <!-- Element Orbs -->
+  <div class="element-orbs">
+    <div class="orb" style="--od:2.1s; --oc:#60d8ff; background:radial-gradient(#60d8ff44,#1a3a6a);" title="Cryo">❄️</div>
+    <div class="orb" style="--od:1.8s; --oc:#ffe060; background:radial-gradient(#ffe06044,#3a2a00);" title="Electro">⚡</div>
+    <div class="orb" style="--od:2.4s; --oc:#ff8060; background:radial-gradient(#ff806044,#3a1a00);" title="Pyro">🔥</div>
+    <div class="orb" style="--od:2s; --oc:#a0ff80; background:radial-gradient(#a0ff8044,#0a2a00);" title="Dendro">🍃</div>
+    <div class="orb" style="--od:1.7s; --oc:#c080ff; background:radial-gradient(#c080ff44,#1a003a);" title="Anemo">🌸</div>
+  </div>
+
+  <!-- Main Card -->
+  <div class="main-card">
+    <span class="corner-tl">✦</span>
+    <span class="corner-br">✦</span>
+
+    <p class="subtitle-label">// A special message initializing...</p>
+    <h1 class="main-title">Happy Birthday,</h1>
+    <h1 class="name-title">Farah ✨</h1>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-gem"></div>
+      <div class="divider-line"></div>
+    </div>
+
+    <p class="birthday-date">May 7, 2006 &nbsp;·&nbsp; Level 20 Unlocked 🎉</p>
+
+    <p class="message">
+      The stars aligned on the day you were born, weaving a tale of a brilliant soul
+      who codes entire worlds into existence and sees the magic in both pixels and petals.
+      Today, Teyvat and every universe beyond celebrate <em>you</em>.
+    </p>
+
+    <p class="from-tag">// with love, from Aryam 💙</p>
+  </div>
+
+  <!-- Age Counter -->
+  <div class="age-section">
+    <div class="age-card">
+      <div class="age-number" id="years">20</div>
+      <div class="age-label">Years</div>
+    </div>
+    <div class="age-card">
+      <div class="age-number" id="days">0</div>
+      <div class="age-label">Days Old</div>
+    </div>
+    <div class="age-card">
+      <div class="age-number" id="hours">0</div>
+      <div class="age-label">Hours Old</div>
+    </div>
+  </div>
+
+  <!-- Info Grid -->
+  <div class="info-grid">
+    <div class="info-panel" style="--panel-glow: rgba(160,112,255,0.08);">
+      <span class="info-panel-icon">⚙️</span>
+      <div class="info-panel-title">Adventurer Stats</div>
+      <div class="info-panel-text">
+        <span class="tag">Programmer</span>
+        <span class="tag">Anime Lover</span>
+        <span class="tag">Genshin Traveler</span>
+        <span class="tag">Level 20</span>
+      </div>
+    </div>
+    <div class="info-panel" style="--panel-glow: rgba(96,216,255,0.08);">
+      <span class="info-panel-icon">🎮</span>
+      <div class="info-panel-title">Genshin Notes</div>
+      <div class="info-panel-text">
+        May your primos be plentiful, your pulls be 5-stars, and your wish rate-up be guaranteed. The Traveler would be proud. 🌟
+      </div>
+    </div>
+    <div class="info-panel" style="--panel-glow: rgba(255,160,96,0.08);">
+      <span class="info-panel-icon">🌸</span>
+      <div class="info-panel-title">Anime Arc</div>
+      <div class="info-panel-text">
+        You are the main character — the one with the special hidden power, the loyal friends, and the legendary power-up moment. Today is your arc. 🔥
+      </div>
+    </div>
+    <div class="info-panel" style="--panel-glow: rgba(96,255,160,0.05);">
+      <span class="info-panel-icon">💻</span>
+      <div class="info-panel-title">Code Note</div>
+      <div class="info-panel-text">
+        No bug can stop you. No error is final. Every great programmer is forged by a thousand stack overflow moments. Keep building. 🚀
+      </div>
+    </div>
+  </div>
+
+  <!-- Code Card -->
+  <div class="code-card">
+    <div class="code-tab">birthday.py</div>
+    <pre>
+<span class="cm"># Farah's Birthday — May 7, 2006</span>
+
+<span class="kw">class</span> <span class="fn">Farah</span>:
+    birthday  = <span class="str">"May 7, 2006"</span>
+    skills    = [<span class="str">"Python"</span>, <span class="str">"Genshin Lore"</span>, <span class="str">"Anime Marathon"</span>]
+    level     = <span class="num">20</span>  <span class="cm"># just updated ✨</span>
+
+    <span class="kw">def</span> <span class="fn">receive_wishes</span>(<span class="kw">self</span>, sender):
+        <span class="kw">return</span> <span class="str">f"Thank you, {sender}! 🎂"</span>
+
+<span class="cm"># Execute:</span>
+farah = <span class="fn">Farah</span>()
+<span class="fn">print</span>(farah.<span class="fn">receive_wishes</span>(<span class="str">"Aryam"</span>))
+<span class="cm"># → "Thank you, Aryam! 🎂"</span>
+<span class="fn">print</span>(<span class="str">"Happy Birthday, Farah! 🌟 Keep coding & adventuring!"</span>)</pre>
+  </div>
+
+  <!-- Music Player -->
+  <div class="music-player" id="musicPlayer">
+    <div class="album-art" id="albumArt">🎵</div>
+    <div class="music-info">
+      <div class="music-suggest">🎵 SONG FOR YOU</div>
+      <div class="music-title">Happy Birthday, Farah!</div>
+      <div class="music-artist">song.mp3</div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="controls">
+        <button class="ctrl-btn" onclick="seekBack()">⏮</button>
+        <button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
+        <button class="ctrl-btn" onclick="seekForward()">⏭</button>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(240,192,96,0.5);margin-left:8px;" id="timeDisplay">0:00</span>
+      </div>
+    </div>
+    <!-- FIXED: Added autoplay and preload attributes -->
+    <audio id="audioPlayer" src="song.mp3" preload="auto" autoplay></audio>
+  </div>
+
+  <p class="footer-text">✦ &nbsp; crafted with love by Aryam &nbsp; · &nbsp; Farah's 20th &nbsp; · &nbsp; 2026 &nbsp; ✦</p>
+</div>
+
+<script>
+// ── STARFIELD ──
+const sf = document.getElementById('starfield');
+for (let i = 0; i < 160; i++) {
+  const s = document.createElement('div');
+  s.className = 'star';
+  const size = Math.random() * 2.5 + 0.5;
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%;
+    top:${Math.random()*100}%;
+    --d:${(Math.random()*4+2).toFixed(1)}s;
+    --min:${(Math.random()*0.3+0.1).toFixed(2)};
+    animation-delay:${(Math.random()*5).toFixed(1)}s;
+  `;
+  sf.appendChild(s);
+}
+
+// Shooting stars
+for (let i = 0; i < 5; i++) {
+  const ss = document.createElement('div');
+  ss.className = 'shooting-star';
+  ss.style.cssText = `
+    top:${Math.random()*40}%;
+    --sd:${(Math.random()*4+5).toFixed(1)}s;
+    --delay:${(Math.random()*12).toFixed(1)}s;
+  `;
+  document.body.appendChild(ss);
+}
+
+// ── PARTICLES ──
+const pc = document.getElementById('particles');
+const colors = ['#f0c060','#60d8ff','#a070ff','#ff9090','#a0ff80'];
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random()*6+3;
+  const c = colors[Math.floor(Math.random()*colors.length)];
+  p.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%;
+    background:${c}; box-shadow:0 0 6px ${c};
+    --dur:${(Math.random()*8+6).toFixed(1)}s;
+    --dx:${(Math.random()*80-40).toFixed(0)}px;
+    animation-delay:${(Math.random()*10).toFixed(1)}s;
+  `;
+  pc.appendChild(p);
+}
+
+// Sakura petals
+for (let i = 0; i < 20; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.style.cssText = `
+    left:${Math.random()*100}%;
+    --pd:${(Math.random()*8+7).toFixed(1)}s;
+    --pdelay:${(Math.random()*12).toFixed(1)}s;
+    --pdx:${(Math.random()*120-60).toFixed(0)}px;
+  `;
+  document.body.appendChild(p);
+}
+
+// ── AGE COUNTER ──
+const born = new Date(2006, 4, 7);
+const now  = new Date();
+const msAge = now - born;
+const daysOld  = Math.floor(msAge / (1000*60*60*24));
+const hoursOld = Math.floor(msAge / (1000*60*60));
+function formatNum(n) {
+  if (n >= 1000) return (n/1000).toFixed(1)+'k';
+  return n.toString();
+}
+document.getElementById('days').textContent  = formatNum(daysOld);
+document.getElementById('hours').textContent = formatNum(hoursOld);
+
+// ── MUSIC PLAYER (FIXED SECTION ONLY) ──
+const audio   = document.getElementById('audioPlayer');
+const playBtn = document.getElementById('playBtn');
+const fill    = document.getElementById('progressFill');
+const timeEl  = document.getElementById('timeDisplay');
+const albumArt = document.getElementById('albumArt');
+
+// FIXED: Use audio.paused instead of separate variable
+function togglePlay() {
+  if (audio.paused) {
+    audio.play().catch(err => console.log('Play blocked, waiting for interaction:', err));
+    playBtn.textContent = '⏸';
+    albumArt.style.animationPlayState = 'running';
+  } else {
+    audio.pause();
+    playBtn.textContent = '▶';
+    albumArt.style.animationPlayState = 'paused';
+  }
+}
+
+function seekBack()    { audio.currentTime = Math.max(0, audio.currentTime - 10); }
+function seekForward() { audio.currentTime = Math.min(audio.duration||0, audio.currentTime + 10); }
+
+audio.addEventListener('timeupdate', () => {
+  if (!audio.duration) return;
+  const pct = (audio.currentTime / audio.duration) * 100;
+  fill.style.width = pct + '%';
+  const m = Math.floor(audio.currentTime/60);
+  const s = Math.floor(audio.currentTime%60).toString().padStart(2,'0');
+  timeEl.textContent = `${m}:${s}`;
+});
+
+audio.addEventListener('ended', () => {
+  playBtn.textContent = '▶';
+  fill.style.width = '0%';
+  albumArt.style.animationPlayState = 'paused';
+});
+
+// FIXED: Attempt autoplay on load with fallback to first click
+window.addEventListener('load', () => {
+  audio.play().catch(() => {
+    // If autoplay blocked, enable play on first user interaction
+    const enableAudio = () => {
+      audio.play().catch(() => {});
+      document.removeEventListener('click', enableAudio);
+      document.removeEventListener('touchstart', enableAudio);
+    };
+    document.addEventListener('click', enableAudio, { once: true });
+    document.addEventListener('touchstart', enableAudio, { once: true });
+  });
+});
+
+// ── SPARKLES ON CLICK ──
+document.addEventListener('click', (e) => {
+  const emojis = ['✨','⭐','🌟','💫','🎇','🎆','❄️','🌸'];
+  const el = document.createElement('div');
+  el.className = 'sparkle-burst';
+  el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+  el.style.left = e.clientX + 'px';
+  el.style.top  = e.clientY + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 900);
+});
+</script>
+</body>
+</html>
